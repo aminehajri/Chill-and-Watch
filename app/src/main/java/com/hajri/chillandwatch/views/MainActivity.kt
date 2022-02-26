@@ -1,7 +1,8 @@
-package com.hajri.chillandwatch
+package com.hajri.chillandwatch.views
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import com.hajri.chillandwatch.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
