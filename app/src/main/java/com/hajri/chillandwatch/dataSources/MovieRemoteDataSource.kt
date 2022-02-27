@@ -16,4 +16,14 @@ class MovieRemoteDataSource(private val movieService: MovieService) : IMovieRemo
             }
         }
     }
+
+    override fun getMoviesByQuery(query: String): Single<List<Movie>> {
+        return movieService.fetchMovieByQuery(query).map { response ->
+            if (response.isSuccessful) {
+                response.body()!!.movies
+            } else {
+                throw HttpException(response)
+            }
+        }
+    }
 }

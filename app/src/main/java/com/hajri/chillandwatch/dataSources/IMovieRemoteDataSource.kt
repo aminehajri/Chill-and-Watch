@@ -12,4 +12,11 @@ interface IMovieRemoteDataSource {
      *  @return [Single]of [List] of[Movie]
      */
     fun getLatestMovies(): Single<List<Movie>>
+
+    /**
+     * Gets a list of movies from [MovieService].
+     *  @param query as [String]
+     *  @return [Single]of [List] of[Movie]
+     */
+    fun getMoviesByQuery(query: String): Single<List<Movie>>
 }

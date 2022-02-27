@@ -17,14 +17,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:contentScrim="@color/design_default_color_primary"
+            app:expandedTitleMarginStart="16dp"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
-
             app:title="movie name">
 
             <ImageView
                 android:id="@+id/iv_detail_movie"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
+                android:layout_height="550dp"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 

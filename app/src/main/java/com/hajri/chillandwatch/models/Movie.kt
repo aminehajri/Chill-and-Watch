@@ -16,7 +16,7 @@ data class Movie(
     var popularity: Double,
 
     @SerializedName("poster_path")
-    var posterPath: String,
+    var posterPath: String?,
 
     @SerializedName("release_date")
     var releaseDate: String,

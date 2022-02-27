@@ -17,18 +17,39 @@ class MovieViewModel(
     private val _listOfMovies: MutableLiveData<List<Movie>> = MutableLiveData()
     val listOfMovies: LiveData<List<Movie>> get() = _listOfMovies
 
-    fun getMovieList() {
-        disposables.add(
-            repository.getLatestMovies().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        _listOfMovies.postValue(it)
-                    }, { error ->
-                        Timber.e(error)
-                    }
-                )
-        )
+    /**
+     * Gets movies from [IMovieRepository]
+     * Updates [_listOfMovies] value
+     * @param query if it is null then trigger [IMovieRepository.getLatestMovies]
+     * else trigger [IMovieRepository.getMoviesByQuery]
+     */
+    fun getMovieList(query: String? = null) {
+        if (query == null) {
+            disposables.add(
+                repository.getLatestMovies().subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            _listOfMovies.postValue(it)
+                        }, { error ->
+                            Timber.e(error)
+                        }
+                    )
+            )
+        } else {
+            disposables.add(
+                repository.getMoviesByQuery(query).subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(
+                        {
+                            _listOfMovies.postValue(it)
+                        }, { error ->
+                            Timber.e(error)
+                        }
+                    )
+            )
+        }
+
     }
 
     override fun onCleared() {

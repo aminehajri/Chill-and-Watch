@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hajri.chillandwatch.*
 import com.hajri.chillandwatch.ChillAndWatchConstant.MOVIE_BUNDLE_KEY
-import com.hajri.chillandwatch.R
 import com.hajri.chillandwatch.databinding.FragmentMovieListBinding
 import com.hajri.chillandwatch.models.Movie
 import com.hajri.chillandwatch.viewmodels.MovieViewModel
@@ -29,15 +29,60 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        movieViewModel.getMovieList()
-        movieViewModel.listOfMovies.observe(viewLifecycleOwner) {
-            movieAdapter = MovieAdapter(it, requireContext(), ::handleMovieClick)
-            binding.recyclerViewOfMovies.apply {
-                layoutManager = LinearLayoutManager(context)
-                adapter = movieAdapter
+        requestListOfMovies()
+        observeMovies()
+        binding.searchView.apply {
+            eventWhenTextChanged { requestListOfMovies(query = it) }
+            eventOnCloseListener { requestListOfMovies() }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.progressBarCity.hide()
+    }
+
+    /**
+     * Gets movies from [MovieViewModel]
+     * @param query nullable as a parameter in [MovieViewModel.getMovieList]
+     */
+    private fun requestListOfMovies(query: String? = null) {
+
+        if (query == null) {
+            binding.progressBarCity.show()
+            movieViewModel.getMovieList()
+        } else {
+            if (query.isEmpty() or query.isBlank()) return
+            movieViewModel.getMovieList(query = query)
+            binding.progressBarCity.show()
+        }
+    }
+
+    /**
+     * Observe [movieViewModel.listOfMovies]
+     * Handle result in case of empty list or not
+     */
+    private fun observeMovies() {
+        movieViewModel.listOfMovies.observe(viewLifecycleOwner) { movies ->
+            binding.progressBarCity.hide()
+            when {
+                movies.isEmpty() -> {
+                    binding.tvEmptyList.show()
+                    binding.recyclerViewOfMovies.hide()
+                }
+                else -> {
+                    binding.recyclerViewOfMovies.show()
+                    binding.tvEmptyList.hide()
+                    movieAdapter = MovieAdapter(movies, requireContext(), ::handleMovieClick)
+                    binding.recyclerViewOfMovies.apply {
+                        layoutManager = LinearLayoutManager(context)
+                        adapter = movieAdapter
+                    }
+                }
             }
         }
     }
+
 
     /**
      * Handle adapter click
