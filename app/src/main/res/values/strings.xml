@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Chill and watch</string>
+    <string name="movie_title">Title:&#160;</string>
+    <string name="released_on">Release date:&#160;</string>
+    <string name="total_voters">Total voters:&#160;</string>
+    <string name="rating">Rating:&#160;</string>
+    <string name="language">Original language:&#160;</string>
+    <string name="unavailable_description">Description is unavailable for this movie</string>
+    <string name="overview">Overview&#160;:</string>
 </resources>
