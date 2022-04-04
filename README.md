@@ -1,5 +1,5 @@
 # Chill-and-Watch
-Android App where you can find about new released movies
+Android App where you can find about new released movies and search for them
 
 <h1>Resources</h1>
 
