@@ -12,10 +12,12 @@ import com.hajri.chillandwatch.ChillAndWatchConstant.MOVIE_BUNDLE_KEY
 import com.hajri.chillandwatch.databinding.FragmentMovieListBinding
 import com.hajri.chillandwatch.models.Movie
 import com.hajri.chillandwatch.viewmodels.MovieViewModel
+import org.koin.android.ext.android.get
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListFragment : Fragment() {
-    private lateinit var binding: FragmentMovieListBinding
+    private var _binding: FragmentMovieListBinding? = null
+    private val binding get() = _binding!!
     private val movieViewModel: MovieViewModel by viewModel()
     private lateinit var movieAdapter: MovieAdapter
 
@@ -23,7 +25,7 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMovieListBinding.inflate(inflater)
+        _binding = FragmentMovieListBinding.inflate(inflater)
         return binding.root
     }
 
@@ -40,6 +42,7 @@ class MovieListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.progressBarCity.hide()
+        _binding = null
     }
 
     /**
@@ -59,7 +62,7 @@ class MovieListFragment : Fragment() {
     }
 
     /**
-     * Observe [movieViewModel.listOfMovies]
+     * Observe [movieViewModel] list of movies
      * Handle result in case of empty list or not
      */
     private fun observeMovies() {
