@@ -1,5 +1,5 @@
 # Chill-and-Watch
-Android App where you can find about new released movies.
+Android App where you can find about newly released movies.
 
 <h1>Resources</h1>
 
@@ -15,7 +15,7 @@ Android App where you can find about new released movies.
 </ul>
 
 <h1>Architecture</h1>
-<h2>MVVM</h2>
+<ul>MVVM</ul>
 
 <h1>Programming language</h1>
 <ul>Kotlin</ul>
